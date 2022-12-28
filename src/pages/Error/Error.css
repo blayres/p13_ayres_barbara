@@ -1,0 +1,66 @@
+/* PAGE 404 */
+
+.error-texte {
+    color: #00bc77;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.number {
+    font-size: 250px;
+    font-weight: 700;
+    margin: 0px 0px 0px 0px;
+}
+
+.soustitre {
+    font-size: 36px;
+    font-weight: 500;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.retourne {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.retourne:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) { 
+    .number {
+        font-size: 96px;
+        margin: 168px 0px 0px 0px;
+    }
+    .soustitre {
+        height: 52px;
+        width: 260px;
+        left: 57px;
+        top: 372px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 26px;
+        letter-spacing: 0em;
+        text-align: center;
+    }
+    .retourne {
+        height: 20px;
+        width: 221px;
+        left: 76px;
+        top: 557px;
+        justify-content: flex-start;
+    }
+    a:-webkit-any-link {
+        font-size: 14px;
+    }
+   }
