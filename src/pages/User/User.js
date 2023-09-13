@@ -10,12 +10,10 @@ function User() {
     const user = JSON.parse(userString);
 
     if (user && user.token) {
-      // O token está presente no localStorage, você pode prosseguir com seu uso.
-      console.log("Token encontrado:", user.token);
-      setUser(user); // Defina o estado do usuário se o token estiver presente.
+      console.log("Token :", user.token);
+      setUser(user);
     } else {
-      // O token não está presente no localStorage.
-      console.log("Token não encontrado no localStorage.");
+      console.log("Token not found in localStorage.");
     }
   }, []);
 
@@ -104,7 +102,7 @@ function User() {
                 Save
               </button>
               <button
-                type="cancel"
+                type="button"
                 className="cancel-in-button"
                 onClick={closeForm}
               >
