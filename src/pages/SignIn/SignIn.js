@@ -34,7 +34,6 @@ function SignIn() {
         })
       );
 
-      // Armazene o token no localStorage
       localStorage.setItem(
         "user",
         JSON.stringify({
