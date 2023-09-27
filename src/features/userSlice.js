@@ -7,9 +7,8 @@ export const userSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      console.log(action.payload);
       if (action.payload.rememberMe) {
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        localStorage.setItem("user", JSON.stringify({ token: action.payload.token }));
       }
       state.user = action.payload;
     },
@@ -22,6 +21,6 @@ export const userSlice = createSlice({
 
 export const { login, logout } = userSlice.actions;
 
-export const selectUser = (state) => state;
+export const selectUser = (state) => state.user.user;
 
 export default userSlice.reducer;

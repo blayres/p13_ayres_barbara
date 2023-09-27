@@ -11,25 +11,22 @@ import { useNavigate } from "react-router-dom";
 
 function SignIn() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const dispatch = useDispatch();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const signIn = await loginUser(username, password);
     if (!signIn) {
-      alert("Mdp invalide");
+      alert("Credenciais inválidas");
     } else {
       console.log(rememberMe);
       dispatch(
         login({
-          username: username,
-          token: signIn.body.token,
-          loggedIn: true,
+          ...signIn.body,
           rememberMe,
         })
       );
@@ -37,10 +34,7 @@ function SignIn() {
       localStorage.setItem(
         "user",
         JSON.stringify({
-          username: username,
           token: signIn.body.token,
-          loggedIn: true,
-          rememberMe,
         })
       );
 

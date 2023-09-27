@@ -3,43 +3,51 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import React, { useEffect, useState } from "react";
 import { profileUser, updateUser } from "../../api/User";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, login } from "../../features/userSlice";
 
 function User() {
-  useEffect(() => {
-    const userString = localStorage.getItem("user");
-    const user = JSON.parse(userString);
-
-    if (user && user.token) {
-      console.log("Token :", user.token);
-      setUser(user);
-    } else {
-      console.log("Token not found in localStorage.");
-    }
-  }, []);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [user, setUser] = useState({});
 
   useEffect(() => {
-    async function getUserProfile() {
-      const userProfile = await profileUser();
-      console.log(userProfile);
-      setUser(userProfile.body);
+    if (user && user.token) {
+      console.log("Token:", user.token);
+    } else {
+      console.log("Token não encontrado no estado Redux.");
     }
+  }, [user]);
 
-    getUserProfile();
-  }, []);
+  useEffect(() => {
+    if (user && user.token) {
+      async function getUserProfile() {
+        const userProfile = await profileUser();
+        if (userProfile && userProfile.body) {
+          dispatch(
+            login({
+              ...userProfile.body,
+              token: user.token,
+            })
+          );
+        }
+      }
+
+      getUserProfile();
+    }
+  }, [user, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updateProfile = await updateUser(firstName, lastName);
     if (!updateProfile) {
-      alert("Oups, une erreur ");
+      alert("Oups, ocorreu um erro.");
     } else {
-      alert("Profile mise à jour");
-      const userUpdate = { ...user, firstName, lastName };
-      setUser(userUpdate);
+      alert("Perfil atualizado com sucesso.");
+      const updatedUser = { ...user, firstName, lastName };
+      dispatch(login(updatedUser));
     }
   };
 
